@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAI - Learning Games</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              500: '#f59e0b',
+              600: '#d97706',
+            },
+            blue: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .game-option:hover {
+      border-color: #f59e0b;
+    }
+    
+    .game-option.selected {
+      border-color: #f59e0b;
+      background-color: #fffbeb;
+    }
+  </style>
+</head> 
+<body class="font-sans bg-gray-50 min-h-screen">
+  <header class="bg-blue-50 border-b border-blue-100">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-bold text-amber-500">EduAI Learning Games</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- Game Setup Form (shown by default) -->
+  <div id="setup-section" class="container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
+      <h2 class="text-xl font-bold text-center mb-6 text-amber-500">Set Up Your Learning Game</h2>
+      <form id="game-setup-form" class="space-y-6">
+        <!-- Game Selection -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Which game would you like to play?</label>
+          <div class="grid grid-cols-2 gap-3 mt-2"> 
+            <a href="charades.html" class="game-option border-2 border-gray-200 rounded-lg p-3 cursor-pointer" data-game="charades">
+              <div class="flex flex-col items-center text-center">
+                <div class="p-2 rounded-full bg-amber-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-amber-500">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium mt-1">Charades</span>
+              </div>
+            </a>
+            
+            <a href="detective.html" class="game-option border-2 border-gray-200 rounded-lg p-3 cursor-pointer" data-game="detective">
+              <div class="flex flex-col items-center text-center">
+                <div class="p-2 rounded-full bg-blue-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-amber-500">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium mt-1">Detective</span>
+              </div>
+            </a>
+            
+    
+            </div>
+          </div>
+          <div id="game-error" class="text-red-500 text-sm mt-1 hidden">Please select a game to continue</div>
+        </div>        
+      </form>
+    </div>
+  </div>
+
+  <!-- Game Chat (hidden by default) -->
+  <div id="game-chat-section" class="container mx-auto px-4 py-8 hidden">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+      <!-- Game Header -->
+      <div class="bg-blue-50 p-4 border-b border-blue-100">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-amber-500" id="game-title">Game Title</h2>
+            <p class="text-sm text-gray-600">Topic: <span id="game-topic" class="font-medium">General Knowledge</span></p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div id="game-score" class="hidden px-3 py-1 bg-amber-100 rounded-full text-amber-800 font-medium">
+              Score: <span id="score-value">0</span>
+            </div>
+            <button id="exit-game" class="px-3 py-1 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition-colors">
+              Exit Game
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Area -->
+      <div id="game-conversation" class="p-4 overflow-y-auto" style="height: 60vh; max-height: 500px;">
+        <div class="space-y-6">
+          <!-- Messages will be added here dynamically -->
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="bg-blue-50 p-4 border-t border-blue-100">
+        <form id="game-chat-form" class="flex items-center gap-2">
+          <input
+            id="game-user-input"
+            type="text"
+            placeholder="Type your answer..."
+            class="flex-1 h-10 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+          />
+          <button 
+            type="submit" 
+            class="inline-flex items-center justify-center rounded-md px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 mr-2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const setupSection = document.getElementById('setup-section');
+    const gameChatSection = document.getElementById('game-chat-section');
+    
+    const gameSetupForm = document.getElementById('game-setup-form');
+    const gameOptions = document.querySelectorAll('.game-option:not([data-game="charades"])');
+    const gameError = document.getElementById('game-error');
+    
+    const gameTopic = document.getElementById('game-topic');
+    const gameTitle = document.getElementById('game-title');
+    const gameScore = document.getElementById('game-score');
+    const scoreValue = document.getElementById('score-value');
+    const gameChatForm = document.getElementById('game-chat-form');
+    const gameUserInput = document.getElementById('game-user-input');
+    const gameConversation = document.getElementById('game-conversation');
+    const exitGameBtn = document.getElementById('exit-game');
+    
+    // Game state variables
+    let selectedTopic = 'General Knowledge';
+    let selectedGame = '';
+    let score = 0;
+    
+    // Game option selection
+    gameOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        // Remove selected class from all options
+        gameOptions.forEach(opt => opt.classList.remove('selected'));
+        
+        // Add selected class to clicked option
+        option.classList.add('selected');
+        
+        // Store selected game
+        selectedGame = option.dataset.game;
+        
+        // Hide error message if shown
+        gameError.classList.add('hidden');
+      });
+    });
+    
+    // Game setup form submission
+    gameSetupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Check if a game is selected
+      if (!selectedGame) {
+        gameError.classList.remove('hidden');
+        return;
+      }
+      
+      // Set game title in chat section
+      switch(selectedGame) {
+        case 'detective':
+          gameTitle.textContent = 'Detective Game';
+          break;
+        case 'duel':
+          gameTitle.textContent = 'Duel Race';
+          gameScore.classList.remove('hidden'); // Show score for duel race
+          break;
+        case 'quiz':
+          gameTitle.textContent = 'Quiz Show';
+          gameScore.classList.remove('hidden'); // Show score for quiz
+          break;
+      }
+      
+      // Show game chat section
+      setupSection.classList.add('hidden');
+      gameChatSection.classList.remove('hidden');
+      gameUserInput.focus();
+      
+      // Initialize the game
+      initializeGame(selectedGame, selectedTopic);
+    });
+    
+    // Exit game button
+    exitGameBtn.addEventListener('click', () => {
+      // Reset game state
+      resetGame();
+      
+      // Return to setup section
+      gameChatSection.classList.add('hidden');
+      setupSection.classList.remove('hidden');
+      
+      // Clear form
+      gameOptions.forEach(opt => opt.classList.remove('selected'));
+      selectedGame = '';
+    });
+    
+    // Initialize game based on selection
+    function initializeGame(game, topic) {
+      // Clear previous conversation
+      gameConversation.querySelector('.space-y-6').innerHTML = '';
+      
+      // Reset score if applicable
+      score = 0;
+      scoreValue.textContent = score;
+      
+      // Add initial message based on game type
+      let initialMessage = '';
+      
+      switch(game) {
+        case 'detective':
+          initialMessage = `Welcome to the Detective Game! I've created a mystery related to "${topic}". Ask questions to gather clues and solve the case.
+
+Here's your first clue...`;
+          break;
+        case 'duel':
+          initialMessage = `Welcome to Duel Race! We'll race to answer questions about "${topic}". The faster you answer correctly, the more points you earn!
+
+Get ready for the first question...`;
+          break;
+        case 'quiz':
+          initialMessage = `Welcome to Quiz Show! I'll ask you multiple-choice questions about "${topic}". Let's see how many you can get right!
+
+Here's your first question...`;
+          break;
+      }
+      
+      // Add initial message
+      addGameMessage(initialMessage, 'assistant');
+      
+      // Get first game prompt from server
+      getGamePrompt(game, topic);
+    }
+    
+    // Reset game state
+    function resetGame() {
+      selectedGame = '';
+      score = 0;
+      scoreValue.textContent = '0';
+      gameScore.classList.add('hidden');
+      gameConversation.querySelector('.space-y-6').innerHTML = '';
+    }
+    
+    // Add message to game conversation
+    function addGameMessage(content, role) {
+      const messageEl = document.createElement('div');
+      messageEl.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
+      
+      const iconSvg = role === 'user' 
+        ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 ml-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>'
+        : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 ml-2"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>';
+      
+      messageEl.innerHTML = `
+        <div class="max-w-[80%] rounded-lg p-4 ${
+          role === 'user' ? 'bg-amber-100 text-gray-800' : 'bg-blue-50 text-gray-800'
+        }">
+          <div class="flex items-center mb-2">
+            <span class="font-medium">${role === 'user' ? 'You' : 'EduAI'}</span>
+            ${iconSvg}
+          </div>
+          <p class="whitespace-pre-line">${content}</p>
+        </div>
+      `;
+      
+      gameConversation.querySelector('.space-y-6').appendChild(messageEl);
+      gameConversation.scrollTop = gameConversation.scrollHeight;
+    }
+    
+    // Get game prompt from server
+    async function getGamePrompt(game, topic) {
+      // Show thinking indicator
+      const thinkingEl = document.createElement('div');
+      thinkingEl.className = 'flex justify-start';
+      thinkingEl.innerHTML = `
+        <div class="bg-blue-50 rounded-lg p-4 flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 animate-spin text-amber-500">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+          </svg>
+          <p>EduAI is thinking...</p>
+        </div>
+      `;
+      gameConversation.querySelector('.space-y-6').appendChild(thinkingEl);
+      gameConversation.scrollTop = gameConversation.scrollHeight;
+      
+      try {
+        // Fetch game prompt from Flask backend
+        const response = await fetch('http://127.0.0.1:5000/gameChat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            message: `Start a ${game} game about ${topic}`,
+            game_type: game,
+            topic: topic
+          }),
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Remove thinking indicator
+        thinkingEl.remove();
+        
+        // Add game prompt
+        addGameMessage(data.response, 'assistant');
+      } catch (error) {
+        console.error('Error fetching game prompt:', error);
+        
+        // Remove thinking indicator
+        thinkingEl.remove();
+        
+        // Show error message and fallback content
+        const fallbackContent = getFallbackContent(game, topic);
+        addGameMessage(fallbackContent, 'assistant');
+      }
+    }
+    
+    // Handle game chat form submission
+    gameChatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const message = gameUserInput.value.trim();
+      if (!message) return;
+      
+      // Add user message
+      addGameMessage(message, 'user');
+      gameUserInput.value = '';
+      
+      // Show thinking indicator
+      const thinkingEl = document.createElement('div');
+      thinkingEl.className = 'flex justify-start';
+      thinkingEl.innerHTML = `
+        <div class="bg-blue-50 rounded-lg p-4 flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 animate-spin text-amber-500">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+          </svg>
+          <p>EduAI is thinking...</p>
+        </div>
+      `;
+      gameConversation.querySelector('.space-y-6').appendChild(thinkingEl);
+      gameConversation.scrollTop = gameConversation.scrollHeight;
+      
+      try {
+        // Send user message to Flask backend
+        const response = await fetch('http://127.0.0.1:5000/gameChat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            message: message,
+            game_type: selectedGame,
+            topic: selectedTopic
+          }),
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Remove thinking indicator
+        thinkingEl.remove();
+        
+        // Add AI response
+        addGameMessage(data.response, 'assistant');
+        
+        // Update score if provided
+        if (data.score !== undefined) {
+          score = data.score;
+          scoreValue.textContent = score;
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+        
+        // Remove thinking indicator
+        thinkingEl.remove();
+        
+        // Show error message and fallback response
+        const fallbackResponse = getFallbackResponse(selectedGame, selectedTopic, message);
+        addGameMessage(fallbackResponse, 'assistant');
+        
+        // Update score for games that need it
+        if (selectedGame === 'quiz' || selectedGame === 'duel') {
+          score += 10; // Simple fallback scoring
+          scoreValue.textContent = score;
+        }
+      }
+    });
+    
+    // Fallback content when server is unavailable
+    function getFallbackContent(game, topic) {
+      switch(game) {
+        case 'detective':
+          return `A mysterious phenomenon related to ${topic} has been observed. Scientists are puzzled by recent findings that contradict established theories. Your first clue: The evidence was discovered in an unexpected location. What questions do you have to help solve this mystery?`;
+        case 'duel':
+          return `First question about ${topic}: What is the main difference between mitosis and meiosis? (A) Number of divisions (B) Number of daughter cells (C) Occurs in all body cells (D) Results in genetic diversity`;
+        case 'quiz':
+          return `Question 1: Which of the following is true about ${topic}?
+A) First possible answer
+B) Second possible answer
+C) Third possible answer
+D) Fourth possible answer`;
+        default:
+          return `Let's explore ${topic} together! What would you like to know about it?`;
+      }
+    }
+    
+    // Fallback response for user messages when server is unavailable
+    function getFallbackResponse(game, topic, message) {
+      return `I'm sorry, I couldn't connect to the server. Let's continue our ${game} game about ${topic}. What else would you like to know?`;
+    }
+  </script>
+  <script>
+    function loadCharades() {
+      // Update the URL to /charades
+      window.history.pushState({}, '', '/charades');
+      
+      // Fetch the content of charades.html (via XMLHttpRequest or fetch)
+      fetch('charades.html')
+        .then(response => response.text())
+        .then(data => {
+          // Load the content from charades.html into the body or specific section
+          document.body.innerHTML = data;  // Replace the entire body content
+        })
+        .catch(error => console.error('Error loading charades.html:', error));
+    }
+  </script>
+</body>
+</html>
+
