@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Tutors - Learning Support</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+      background-color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    header {
+      background-color: #FFCC99;
+      padding: 1rem 0;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+    
+    nav ul li a {
+      color: #333;
+      text-decoration: none;
+    }
+    
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+    
+    main {
+      flex: 1;
+      padding: 3rem 0;
+    }
+    
+    .intro {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .intro h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    
+    .intro p {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .tutor-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (min-width: 640px) {
+      .tutor-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .tutor-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    .tutor-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: box-shadow 0.3s ease;
+      background-color: white;
+    }
+    
+    .tutor-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+      padding: 1.5rem 1.5rem 0.5rem;
+    }
+    
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #FFAA55;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-description {
+      color: #666;
+      font-size: 0.875rem;
+    }
+    
+    .card-content {
+      padding: 0.5rem 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .card-content p {
+      color: #555;
+    }
+    
+    .card-footer {
+      padding: 1.5rem;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: #FFCC99;
+      color: #333;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      text-decoration: none;
+      font-weight: 500;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    
+    .btn:hover {
+      background-color: #FFBB77;
+    }
+    
+    footer {
+      background-color: #f5f5f5;
+      padding: 1.5rem 0;
+      text-align: center;
+      color: #666;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">Digital Tutors</div>
+        <nav>
+          <ul>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="intro">
+        <h1>Need help with homework?</h1>
+        <p>
+          Want to explore a new concept or learn in a way that suits your style?
+          Meet our amazing digital tutors—here to support your learning journey every step of the way.
+        </p>
+      </section>
+
+      <section class="tutor-grid">
+        <!-- Sam -->
+        <div class="tutor-card">
+          <div class="card-header">
+            <h2 class="card-title">Meet Sam</h2>
+            <div class="card-description">Your homework helper</div>
+          </div>
+          <div class="card-content">
+            <p>Hi! I'm here to help with your homework, no matter the subject. My approach is simple and supportive.</p>
+          </div>
+          <div class="card-footer">
+            <a href="sam.html" class="btn">Learn more about Sam</a>
+          </div>
+        </div>
+
+        <!-- Joe -->
+        <div class="tutor-card">
+          <div class="card-header">
+            <h2 class="card-title">Meet Joe</h2>
+            <div class="card-description">Your concept explainer</div>
+          </div>
+          <div class="card-content">
+            <p>I'm here to teach you concepts from the ground up. If you're struggling to understand something, you've come to the right place.</p>
+          </div>
+          <div class="card-footer">
+            <a href="joe.html" class="btn">Learn more about Joe</a>
+          </div>
+        </div>
+
+        <!-- Russell -->
+        <div class="tutor-card">
+          <div class="card-header">
+            <h2 class="card-title">Meet Russell</h2>
+            <div class="card-description">Your adaptive learning guide</div>
+          </div>
+          <div class="card-content">
+            <p>Are you more of a visual learner? Or do you learn in a different way that's not always supported in traditional classrooms?</p>
+          </div>
+          <div class="card-footer">
+            <a href="russell.html" class="btn">Learn more about Russell</a>
+          </div>
+        </div>
+       
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Digital Tutors. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
+
+
