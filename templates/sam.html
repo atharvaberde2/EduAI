@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet Sam - Digital Tutors</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+      background-color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    header {
+      background-color: #FFCC99;
+      padding: 1rem 0;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+    
+    nav ul li a {
+      color: #333;
+      text-decoration: none;
+    }
+    
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+    
+    main {
+      flex: 1;
+      padding: 3rem 0;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      color: #FFAA55;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+    }
+    
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    
+    .back-link::before {
+      content: "←";
+      margin-right: 0.5rem;
+    }
+    
+    .tutor-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      background-color: white;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .card-header {
+      padding: 1.5rem 1.5rem 0.5rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .card-title {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: #FFAA55;
+    }
+    
+    .card-content {
+      padding: 1.5rem;
+    }
+    
+    .card-content p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: #333;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: #FFCC99;
+      color: #333;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.25rem;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 1.5rem;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+    
+    .btn:hover {
+      background-color: #FFBB77;
+    }
+    
+    footer {
+      background-color: #f5f5f5;
+      padding: 1.5rem 0;
+      text-align: center;
+      color: #666;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">Digital Tutors</div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <a href="index.html" class="back-link">Back to all tutors</a>
+      
+      <div class="tutor-card">
+        <div class="card-header">
+          <h1 class="card-title">Meet Sam</h1>
+        </div>
+        <div class="card-content">
+          <p>Hi! I'm here to help with your homework, no matter the subject. My approach is simple and supportive:</p>
+          
+          <p>I'll start by giving you a helpful hint and let you try it out.</p>
+          
+          <p>If you get stuck, I'll walk you through the first step and guide you from there.</p>
+          
+          <p>I focus on making sure you understand each part before moving on—because real learning happens step by step.</p>
+          
+          <p>Need help figuring out where you went wrong? I can review your solution and explain what happened and how to fix it.</p>
+          
+          <a href="sam-chat.html" class="btn">Book a session with Sam</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Digital Tutors. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
