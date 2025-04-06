@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Tutor - AI-Powered Learning</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Custom animations */
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(0.95); opacity: 0.5; }
+    }
+    
+    .animate-pulse-custom {
+      animation: pulse 2s infinite;
+    }
+    
+    /* Custom styles */
+    .bg-blue-50 {
+      background-color: #eff6ff;
+    }
+    
+    .bg-amber-500 {
+      background-color: #f59e0b;
+    }
+    
+    .text-amber-500 {
+      color: #f59e0b;
+    }
+    
+    .border-amber-500 {
+      border-color: #f59e0b;
+    }
+    
+    .hover\:bg-amber-600:hover {
+      background-color: #d97706;
+    }
+    
+    .hover\:text-amber-500:hover {
+      color: #f59e0b;
+    }
+    
+    .bg-amber-100 {
+      background-color: #fef3c7;
+    }
+    
+    .bg-red-500 {
+      background-color: #ef4444;
+    }
+    
+    .bg-red-50 {
+      background-color: #fef2f2;
+    }
+    
+    .text-red-500 {
+      color: #ef4444;
+    }
+    
+    .border-red-100 {
+      border-color: #fee2e2;
+    }
+    
+    .conversation-area {
+      max-height: calc(100vh - 200px);
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Navigation Bar -->
+  <nav class="w-full bg-blue-50 border-b border-blue-100 sticky top-0 z-10">
+    <div class="container mx-auto px-4 md:px-6 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo and Brand -->
+        <div class="flex items-center">
+          <a href="/" class="flex items-center space-x-2">
+            <span class="text-2xl font-bold text-amber-500">EduAI</span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="/" class="text-gray-700 hover:text-amber-500 font-medium transition-colors">
+            Home
+          </a>
+          <a href="tutor.html" class="text-gray-700 hover:text-amber-500 font-medium transition-colors">
+            Tutor
+          </a>
+          <a href="/courses" class="text-gray-700 hover:text-amber-500 font-medium transition-colors">
+            Gamification
+          </a>
+          <a href="/resources" class="text-gray-700 hover:text-amber-500 font-medium transition-colors">
+            Adventure
+          </a>
+        </div>
+
+        <!-- Sign In / Sign Up Buttons -->
+        <div class="hidden md:flex items-center space-x-3">
+          <button class="px-4 py-2 border border-amber-500 text-amber-500 rounded-md hover:bg-amber-50">
+            Sign In
+          </button>
+          <button class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-md">
+            Sign Up
+          </button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button class="p-2 text-amber-500" id="mobile-menu-button">
+            <i class="fas fa-bars h-6 w-6"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu (hidden by default) -->
+      <div class="md:hidden hidden pt-4 pb-3 border-t border-blue-100 mt-4" id="mobile-menu">
+        <div class="flex flex-col space-y-3">
+          <a href="/" class="text-gray-700 hover:text-amber-500 font-medium py-2 transition-colors">
+            Home
+          </a>
+          <a href="/tutor" class="text-gray-700 hover:text-amber-500 font-medium py-2 transition-colors">
+            Tutor
+          </a>
+          <a href="/courses" class="text-gray-700 hover:text-amber-500 font-medium py-2 transition-colors">
+            Courses
+          </a>
+          <a href="/resources" class="text-gray-700 hover:text-amber-500 font-medium py-2 transition-colors">
+            Resources
+          </a>
+          <div class="flex flex-col space-y-2 pt-2">
+            <button class="w-full px-4 py-2 border border-amber-500 text-amber-500 rounded-md hover:bg-amber-50">
+              Sign In
+            </button>
+            <button class="w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-md">
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="w-full py-12 md:py-24 lg:py-32 bg-blue-50">
+    <div class="container px-4 md:px-6 mx-auto">
+      <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+        <div class="space-y-4">
+          <div class="inline-block rounded-lg bg-amber-100 px-3 py-1 text-sm text-amber-600 font-medium">
+            AI-Powered Learning
+          </div>
+          <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl text-amber-500">
+            Learn faster with AI and one-to-one tutoring
+          </h1>
+          <p class="text-lg text-gray-600 md:text-xl max-w-[600px]">
+            Our AI analyzes your handwritten notes while expert tutors provide personalized guidance to accelerate
+            your learning journey.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button class="px-6 py-3 text-lg h-12 bg-amber-500 hover:bg-amber-600 text-white rounded-md flex items-center justify-center">
+              Start Learning
+              <i class="fas fa-arrow-right ml-2 h-5 w-5"></i>
+            </button>
+            <button class="px-6 py-3 text-lg h-12 border border-gray-300 rounded-md flex items-center justify-center">
+              Take a Tour
+            </button>
+          </div>
+        </div>
+        <div class="relative h-[400px] overflow-hidden rounded-xl border bg-white shadow-xl">
+          <img 
+            src="https://placehold.co/600x400" 
+            alt="Handwriting recognition in action"
+            class="object-cover w-full h-full"
+          >
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-black/20 flex items-end p-6">
+            <p class="text-sm text-white bg-black/60 p-2 rounded-md">
+              Our AI recognizes handwriting with 98% accuracy
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 md:mt-24">
+        <h2 class="text-2xl font-bold text-center mb-8 text-amber-500">Your Learning Journey</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="p-6 border-2 hover:border-amber-500 transition-colors rounded-lg bg-white">
+            <div class="flex flex-col items-center text-center space-y-4">
+              <div class="p-3 rounded-full bg-amber-100">
+                <i class="fas fa-book-open h-8 w-8 text-amber-600"></i>
+              </div>
+              <h3 class="text-xl font-bold text-amber-500">Start a Lesson</h3>
+              <p class="text-gray-600">
+                Choose from our library of lessons or create your own custom learning path.
+              </p>
+            </div>
+          </div>
+          <div class="p-6 border-2 hover:border-amber-500 transition-colors rounded-lg bg-white">
+            <div class="flex flex-col items-center text-center space-y-4">
+              <div class="p-3 rounded-full bg-amber-100">
+                <i class="fas fa-pen h-8 w-8 text-amber-600"></i>
+              </div>
+              <h3 class="text-xl font-bold text-amber-500">Submit Your Work</h3>
+              <p class="text-gray-600">
+                Upload photos of your handwritten notes or exercises for instant AI analysis.
+              </p>
+            </div>
+          </div>
+          <div class="p-6 border-2 hover:border-amber-500 transition-colors rounded-lg bg-white">
+            <div class="flex flex-col items-center text-center space-y-4">
+              <div class="p-3 rounded-full bg-amber-100">
+                <i class="fas fa-chart-bar h-8 w-8 text-amber-600"></i>
+              </div>
+              <h3 class="text-xl font-bold text-amber-500">Track Progress</h3>
+              <p class="text-gray-600">
+                View detailed analytics and personalized recommendations to improve your skills.
+              </p>
+            </div>
+          </div>
+          <div class="p-6 border-2 hover:border-amber-500 transition-colors rounded-lg bg-white">
+            <div class="flex flex-col items-center text-center space-y-4">
+              <div class="p-3 rounded-full bg-amber-100">
+                <i class="fas fa-users h-8 w-8 text-amber-600"></i>
+              </div>
+              <h3 class="text-xl font-bold text-amber-500">One-to-One Tutoring</h3>
+              <p class="text-gray-600">
+                Connect with expert tutors for personalized sessions tailored to your learning style and pace.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Voice Tutor Section -->
+  <section class="min-h-screen w-full flex flex-col bg-white py-8">
+    <!-- Header -->
+    <div class="bg-blue-50 p-4 border-b border-blue-100 text-center">
+      <h1 class="text-xl font-bold text-amber-500">Voice Tutor - Powered by Deepgram & Gemini 1.5</h1>
+    </div>
+
+    <!-- Conversation area -->
+    <div class="flex-1 w-full max-w-4xl mx-auto p-4 conversation-area" id="conversation-area">
+      <div class="h-full flex items-center justify-center text-gray-400" id="empty-state">
+        <p>Tap the microphone and ask a question to start</p>
+      </div>
+      <div class="space-y-6 hidden" id="conversation-messages">
+        <!-- Messages will be added here by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Current transcript during recording -->
+    <div class="w-full max-w-4xl mx-auto px-4 py-2 hidden" id="transcript-area">
+      <div class="bg-gray-100 rounded-lg p-3">
+        <p class="text-sm text-gray-500">Hearing:</p>
+        <p id="transcript-text"></p>
+      </div>
+    </div>
+
+    <!-- Recording indicator -->
+    <div class="w-full max-w-4xl mx-auto px-4 py-2 hidden" id="recording-indicator">
+      <div class="bg-red-50 border border-red-100 rounded-lg p-3 flex items-center justify-between">
+        <div class="flex items-center">
+          <div class="h-3 w-3 bg-red-500 rounded-full animate-pulse-custom mr-3"></div>
+          <p class="text-red-500 font-medium">Recording...</p>
+        </div>
+        <p class="text-sm text-gray-500">Speak clearly into your microphone</p>
+      </div>
+    </div>
+
+    <!-- Microphone control area -->
+    <div class="w-full bg-blue-50 border-t border-blue-100 p-6">
+      <div class="flex flex-col items-center justify-center">
+        <button
+          id="mic-button"
+          class="relative focus:outline-none group"
+          aria-label="Start recording"
+        >
+          <!-- Pulsing background for recording state -->
+          <div id="pulse-bg" class="absolute inset-0 rounded-full bg-red-100 animate-pulse-custom scale-150 hidden"></div>
+
+          <!-- Microphone button -->
+          <div id="mic-button-bg" class="relative p-6 rounded-full transition-colors bg-gray-100 hover:bg-amber-100">
+            <i id="mic-icon" class="fas fa-microphone h-10 w-10 text-amber-500"></i>
+          </div>
+        </button>
+
+        <!-- Status text -->
+        <p class="mt-4 text-gray-600 text-sm" id="status-text">
+          Tap to start recording
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-button').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Voice tutor functionality (simplified demo)
+    let isRecording = false;
+    let status = "idle"; // idle, recording, transcribing, processing, responding
+    const conversation = [];
+
+    const micButton = document.getElementById('mic-button');
+    const pulseBackground = document.getElementById('pulse-bg');
+    const micButtonBg = document.getElementById('mic-button-bg');
+    const micIcon = document.getElementById('mic-icon');
+    const statusText = document.getElementById('status-text');
+    const recordingIndicator = document.getElementById('recording-indicator');
+    const transcriptArea = document.getElementById('transcript-area');
+    const transcriptText = document.getElementById('transcript-text');
+    const conversationArea = document.getElementById('conversation-area');
+    const emptyState = document.getElementById('empty-state');
+    const conversationMessages = document.getElementById('conversation-messages');
+
+    micButton.addEventListener('click', function() {
+      if (status === "responding") {
+        // Start a new question
+        startRecording();
+      } else if (isRecording) {
+        stopRecording();
+      } else {
+        startRecording();
+      }
+    });
+
+    function startRecording() {
+      isRecording = true;
+      status = "recording";
+      
+      // Update UI
+      pulseBackground.classList.remove('hidden');
+      micButtonBg.classList.remove('bg-gray-100', 'hover:bg-amber-100');
+      micButtonBg.classList.add('bg-red-500');
+      micIcon.classList.remove('text-amber-500');
+      micIcon.classList.add('text-white');
+      micIcon.classList.remove('fa-microphone');
+      micIcon.classList.add('fa-stop-circle');
+      statusText.textContent = "Recording... Tap to stop when finished speaking";
+      recordingIndicator.classList.remove('hidden');
+      
+      // Simulate transcript (in a real app, this would come from the speech recognition API)
+      setTimeout(() => {
+        transcriptArea.classList.remove('hidden');
+        transcriptText.textContent = "How does artificial intelligence work?";
+      }, 2000);
+    }
+
+    function stopRecording() {
+      isRecording = false;
+      status = "processing";
+      
+      // Update UI
+      pulseBackground.classList.add('hidden');
+      micButtonBg.classList.remove('bg-red-500');
+      micButtonBg.classList.add('bg-gray-300');
+      micIcon.classList.remove('text-white');
+      micIcon.classList.add('text-gray-500');
+      micIcon.classList.remove('fa-stop-circle');
+      micIcon.classList.add('fa-spinner', 'fa-spin');
+      statusText.textContent = "Processing your question with Gemini 1.5...";
+      recordingIndicator.classList.add('hidden');
+      
+      // Get the transcript
+      const transcript = transcriptText.textContent;
+      
+      // Add user message to conversation
+      addMessage("user", transcript);
+      
+      // Hide transcript area
+      transcriptArea.classList.add('hidden');
+      
+      // Simulate AI response (in a real app, this would come from the Gemini API)
+      setTimeout(() => {
+        const response = "AI works through a combination of algorithms, data, and computing power. At its core, modern AI uses neural networks that mimic the human brain's structure. These networks process vast amounts of data to identify patterns and make predictions.\n\nFor example, in speech recognition (like what you're using now), the AI analyzes sound patterns, matches them to known words, and converts your speech to text. Then another AI model (Gemini 1.5 in this case) processes that text to generate a meaningful response.\n\nThe key to AI's capabilities is machine learning - the ability to improve performance through experience without explicit programming.";
+        
+        addMessage("assistant", response);
+        
+        // Update UI for responding state
+        status = "responding";
+        micButtonBg.classList.remove('bg-gray-300');
+        micButtonBg.classList.add('bg-gray-100', 'hover:bg-amber-100');
+        micIcon.classList.remove('text-gray-500', 'fa-spinner', 'fa-spin');
+        micIcon.classList.add('text-amber-500', 'fa-microphone');
+        statusText.textContent = "Tap to ask another question";
+      }, 3000);
+    }
+
+    function addMessage(role, content) {
+      // Add to conversation array
+      conversation.push({ role, content });
+      
+      // Hide empty state if this is the first message
+      if (conversation.length === 1) {
+        emptyState.classList.add('hidden');
+        conversationMessages.classList.remove('hidden');
+      }
+      
+      // Create message element
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
+      
+      const messageBubble = document.createElement('div');
+      messageBubble.className = `max-w-[80%] rounded-lg p-4 ${
+        role === "user" ? "bg-amber-100 text-gray-800" : "bg-blue-50 text-gray-800"
+      }`;
+      
+      const headerDiv = document.createElement('div');
+      headerDiv.className = "flex items-center mb-2";
+      
+      if (role === "user") {
+        headerDiv.innerHTML = `
+          <span class="font-medium">You</span>
+          <i class="fas fa-user ml-2 h-4 w-4"></i>
+        `;
+      } else {
+        headerDiv.innerHTML = `
+          <span class="font-medium">Gemini 1.5</span>
+          <i class="fas fa-robot ml-2 h-4 w-4"></i>
+        `;
+      }
+      
+      const contentP = document.createElement('p');
+      contentP.className = "whitespace-pre-line";
+      contentP.textContent = content;
+      
+      messageBubble.appendChild(headerDiv);
+      messageBubble.appendChild(contentP);
+      messageDiv.appendChild(messageBubble);
+      conversationMessages.appendChild(messageDiv);
+      
+      // Scroll to bottom
+      conversationArea.scrollTop = conversationArea.scrollHeight;
+    }
+  </script>
+</body>
+</html>
