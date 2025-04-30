@@ -20,9 +20,9 @@ app.secret_key = os.urandom(24)
 # Configure Gemini API
 #AIzaSyD6kMAT2p-u6IkT9aIusodwV9y9F_6jlMk
 #genai.configure(api_key= "AIzaSyBaAkqij2jiiN4Zz6glW2Hc_BshvgKumI4")
-genai.configure(api_key= "AIzaSyD6kMAT2p-u6IkT9aIusodwV9y9F_6jlMk")
+genai.configure(api_key= os.getenv("API_KEY"))
 #genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 game_data = {}
 
 
