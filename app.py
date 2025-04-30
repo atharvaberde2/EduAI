@@ -20,7 +20,7 @@ app.secret_key = os.urandom(24)
 
 genai.configure(api_key= os.getenv("API_KEY"))
 #genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-openai.api_key = os.genenv("OPENAI_API_KEY")
+openai.api_key = os.genenv("OPENAI_KEY")
 game_data = {}
 
 
