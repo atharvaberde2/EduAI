@@ -6,7 +6,6 @@ Created on Thu Mar 27 14:59:55 2025
 @author: athar
 """
 
-
 import flask
 from flask import request, jsonify, render_template, session
 import google.generativeai as genai
@@ -17,10 +16,9 @@ import openai
 app = flask.Flask(__name__, template_folder='templates')
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.secret_key = os.urandom(24)
-
-genai.configure(api_key= os.getenv("API_KEY"))
+genai.configure(api_key= "AIzaSyD6kMAT2p-u6IkT9aIusodwV9y9F_6jlMk")
 #genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-openai.api_key = os.genenv("OPENAI_KEY")
+openai.api_key = "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"
 game_data = {}
 
 
