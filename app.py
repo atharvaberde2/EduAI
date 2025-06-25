@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 app = flask.Flask(__name__, template_folder='templates')
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.secret_key = os.urandom(24)
-genai.configure(api_key=”")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 load_dotenv() 
 #genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
