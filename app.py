@@ -25,7 +25,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 game_data = {}
 
 
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.0-flash")
 system_prompt = (
     "You are playing charades with the user. Follow these rules:\n"
     "- Ask the user to pick a topic first.\n"
