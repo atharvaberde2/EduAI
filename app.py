@@ -138,6 +138,8 @@ def chat():
         response = chat_sam.send_message(user_message)
         return jsonify({"response": response.text})
     except Exception as e:
+        import traceback
+        traceback.print_exc() 
         return jsonify({"error": str(e)}), 500
 
 @app.route("/joe.html", methods=["GET", "POST"])
